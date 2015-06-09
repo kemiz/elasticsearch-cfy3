@@ -1,0 +1,65 @@
+###########################################################
+# This Blueprint installs the Grafana
+# on an openstack cloud environment.
+###########################################################
+
+tosca_definitions_version: cloudify_dsl_1_0
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/3.2m8/types.yaml
+  - http://www.getcloudify.org/spec/openstack-plugin/1.2m8/plugin.yaml
+  - http://www.getcloudify.org/spec/diamond-plugin/1.2m8/plugin.yaml
+  - https://raw.githubusercontent.com/kemiz/monitored-server-cfy3/master/types/monitored-server-types.yaml
+  - types/elasticsearch.yaml
+
+inputs:
+
+  image:
+    description: >
+      Image to be used when launching agent VM's
+
+  flavor:
+    description: >
+      Flavor of the agent VM's
+
+  agent_user:
+    description: >
+      User for connecting to agent VM's
+
+  elasticsearch_port:
+    description: >
+      elasticsearch port
+
+node_templates:
+
+  elasticsearch_host:
+    type: monitoredhosts.openstack.nodes.MonitoredServer
+    relationships:
+      - target: elasticsearch_security_group
+        type: cloudify.openstack.server_connected_to_security_group
+
+  elasticsearch:
+    type: elasticsearch.nodes.Elasticsearch
+    properties:
+      port: { get_input: elasticsearch_port }
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: grafana_host
+
+  ###########################################################
+  # A security group to enable access to the elasticsearch host
+  # using the port of the elasticsearch node.
+  #
+  # We need this so that applications can
+  # comminicate with elasticsearch, since they are running on
+  # different hosts.
+  ###########################################################
+
+  elasticsearch_security_group:
+    type: cloudify.openstack.nodes.SecurityGroup
+    properties:
+      security_group:
+        name: elasticsearch_security_group
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          port: { get_property: [ elasticsearch, port ] }
