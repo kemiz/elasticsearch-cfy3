@@ -44,7 +44,7 @@ node_templates:
       port: { get_input: elasticsearch_port }
     relationships:
       - type: cloudify.relationships.contained_in
-        target: grafana_host
+        target: elasticsearch_host
 
   ###########################################################
   # A security group to enable access to the elasticsearch host
