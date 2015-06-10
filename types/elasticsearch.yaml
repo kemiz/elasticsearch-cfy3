@@ -34,7 +34,7 @@ node_types:
 
 relationships:
 
-  connected_to_grafana:
+  connected_to_elasticsearch:
     derived_from: cloudify.relationships.connected_to
     # target_interfaces:
       # cloudify.interfaces.relationship_lifecycle:
