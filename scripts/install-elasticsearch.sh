@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#!/bin/bash
 # Install JDK
-
 set -x
 
 YUM_CMD=$(which yum)
