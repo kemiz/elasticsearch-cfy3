@@ -20,21 +20,21 @@ node_types:
           implementation: script.script_runner.tasks.run
           inputs:
             script_path:
-              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2m8/scripts/install-elasticsearch.sh
+              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2/scripts/install-elasticsearch.sh
         start:
           implementation: script.script_runner.tasks.run
           inputs:
             script_path:
-              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2m8/scripts/start-elasticsearch.sh
+              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2/scripts/start-elasticsearch.sh
         stop:
           implementation: script.script_runner.tasks.run
           inputs:
             script_path:
-              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2m8/scripts/stop-elasticsearch.sh
+              default: https://raw.githubusercontent.com/kemiz/elasticsearch-cfy3/3.2/scripts/stop-elasticsearch.sh
 
 relationships:
 
-  connected_to_grafana:
+  connected_to_elasticsearch:
     derived_from: cloudify.relationships.connected_to
     # target_interfaces:
       # cloudify.interfaces.relationship_lifecycle:
