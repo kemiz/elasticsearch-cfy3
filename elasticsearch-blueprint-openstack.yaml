@@ -6,10 +6,10 @@
 tosca_definitions_version: cloudify_dsl_1_0
 
 imports:
-  - http://www.getcloudify.org/spec/cloudify/3.2m8/types.yaml
-  - http://www.getcloudify.org/spec/openstack-plugin/1.2m8/plugin.yaml
-  - http://www.getcloudify.org/spec/diamond-plugin/1.2m8/plugin.yaml
-  - https://raw.githubusercontent.com/kemiz/monitored-server-cfy3/master/types/monitored-server-types.yaml
+  - http://www.getcloudify.org/spec/cloudify/3.2/types.yaml
+  - http://www.getcloudify.org/spec/openstack-plugin/1.2/plugin.yaml
+  - http://www.getcloudify.org/spec/diamond-plugin/1.2/plugin.yaml
+  - https://raw.githubusercontent.com/kemiz/monitored-server-cfy3/1.2/types/monitored-server-types.yaml
   - types/elasticsearch.yaml
 
 inputs:
