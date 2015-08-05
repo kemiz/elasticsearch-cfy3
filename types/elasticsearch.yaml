@@ -11,8 +11,11 @@ node_types:
   elasticsearch.nodes.Elasticsearch:
     derived_from: cloudify.nodes.SoftwareComponent
     properties:
-      port:
-        description: Elasticsearch port
+      api_port:
+        description: Elasticsearch API port
+        type: integer
+      cluster_port:
+        description: Elasticsearch cluster port
         type: integer
     interfaces:
       cloudify.interfaces.lifecycle:
@@ -36,10 +39,3 @@ relationships:
 
   connected_to_elasticsearch:
     derived_from: cloudify.relationships.connected_to
-    # target_interfaces:
-      # cloudify.interfaces.relationship_lifecycle:
-      #   postconfigure:
-      #     implementation: script.script_runner.tasks.run
-      #     inputs:
-      #       script_path:
-      #         default: 
