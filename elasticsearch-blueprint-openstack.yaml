@@ -26,9 +26,15 @@ inputs:
     description: >
       User for connecting to agent VM's
 
-  elasticsearch_port:
+  elasticsearch_api_port:
+    default: 9200
     description: >
       elasticsearch port
+
+  elasticsearch_cluster_port:
+    default: 9300
+    description: >
+      elasticsearch cluster port
 
 node_templates:
 
@@ -41,7 +47,8 @@ node_templates:
   elasticsearch:
     type: elasticsearch.nodes.Elasticsearch
     properties:
-      port: { get_input: elasticsearch_port }
+      api_port: { get_input: elasticsearch_api_port }
+      cluster_port: { get_input: elasticsearch_cluster_port }
     relationships:
       - type: cloudify.relationships.contained_in
         target: elasticsearch_host
@@ -51,7 +58,7 @@ node_templates:
   # using the port of the elasticsearch node.
   #
   # We need this so that applications can
-  # comminicate with elasticsearch, since they are running on
+  # communicate with elasticsearch, since they are running on
   # different hosts.
   ###########################################################
 
@@ -62,4 +69,6 @@ node_templates:
         name: elasticsearch_security_group
       rules:
         - remote_ip_prefix: 0.0.0.0/0
-          port: { get_property: [ elasticsearch, port ] }
+          port: { get_property: [ elasticsearch, api_port ] }
+        - remote_ip_prefix: 0.0.0.0/0
+          port: { get_property: [ elasticsearch, cluster_port ] }
